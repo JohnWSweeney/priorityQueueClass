@@ -79,17 +79,22 @@ int priorityQueue::sort(node** list)
 	return 0;
 }
 
-int priorityQueue::set(bool boolean)
+int priorityQueue::top(node* list, int &data)
 {
-	this->isAscending = boolean;
-	if (this->isAscending == true)
+	if (list == nullptr) return 1; // list is empty.
+	data = list->data;
+	return 0;
+}
+
+int priorityQueue::set(node** list, bool boolean)
+{
+	if (boolean != this->isAscending)
 	{
-		return 1;
-	}
-	else
-	{
+		this->isAscending = boolean;
+		this->sort(list);
 		return 0;
 	}
+	else return 1;
 }
 
 int priorityQueue::push(node** list, int data)
@@ -118,6 +123,24 @@ int priorityQueue::pop(node** list)
 	*list = dummy->next;
 	delete dummy;
 	return 0;
+}
+
+int priorityQueue::clear(node** list)
+{
+	if (*list == nullptr) return 1; // list is empty.
+	// delete all nodes in list.
+	do {
+		node* dummy = *list;
+		*list = dummy->next;
+		delete dummy;
+	} while (*list != nullptr);
+	return 0;
+}
+
+int priorityQueue::isEmpty(node* list)
+{
+	if (list == nullptr) return 1; // list is empty.
+	else return 0; // list is not empty.
 }
 
 int priorityQueue::size(node* list, int &nodeCount)
